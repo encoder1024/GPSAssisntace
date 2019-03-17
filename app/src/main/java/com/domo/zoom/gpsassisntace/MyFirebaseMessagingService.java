@@ -74,7 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         int notificationId = new Random().nextInt(60000);
 
 
-        Bitmap bitmap = getBitmapfromUrl(remoteMessage.getData().get("image-url"));
+        Bitmap bitmap = getBitmapfromUrl(remoteMessage.getData().get("image_url"));
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
 
@@ -104,6 +104,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentText(remoteMessage.getData().get("message"))
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
+                        .setPriority(Notification.PRIORITY_HIGH)
+//                        .setCategory(Notification.CATEGORY_PROMO)
 //                        .addAction(R.drawable.ic_favorite_true,
 //                                getString(R.string.notification_add_to_cart_button),likePendingIntent)
                         .setContentIntent(pendingIntent);

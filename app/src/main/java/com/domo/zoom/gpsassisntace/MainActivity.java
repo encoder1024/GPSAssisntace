@@ -225,6 +225,7 @@ public class MainActivity extends AppCompatActivity
                                     //TODO guardar el evento en la DB
                                     //TODO guardar el evento de lectura de QR con fecha hora y posición.
                                     //TODO limitar en tiempo las notificacones, por ejemplo detectar cercania cada 24 hs y si es habitual, hacerlo una vez a la semana.
+                                    //TODO veamos que apsa con los cambios.
 
                                     int notificationId = new Random().nextInt(60000);
 

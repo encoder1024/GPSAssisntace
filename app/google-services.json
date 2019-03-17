@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "160147286030",
+    "firebase_url": "https://complete-silo-231019.firebaseio.com",
+    "project_id": "complete-silo-231019",
+    "storage_bucket": "complete-silo-231019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160147286030:android:b9b7ed4cf61d5cfc",
+        "android_client_info": {
+          "package_name": "com.domo.zoom.gpsassisntace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160147286030-c6be5rup5nqscg4ma5gorumapkq3a4gp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.domo.zoom.gpsassisntace",
+            "certificate_hash": "1e01f82f6ce11d6465b16d0e8623ac995476027c"
+          }
+        },
+        {
+          "client_id": "160147286030-6vgmf2djvk3ra1q1iqcl0okh7vn62qvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvgFoRpoNNRWhFN67YTVPEJZpOFwVTksk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160147286030-6vgmf2djvk3ra1q1iqcl0okh7vn62qvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

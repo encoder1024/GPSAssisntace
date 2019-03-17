@@ -1,0 +1,29 @@
+03:33 09/03/2019
+
+El user id 144 es un prestador y tiene el sitio 256 a cargo. Está instalado en el celu de Gina.
+
+En mi celular tengo la app del lado usuario final instalada, con id148 y vehículo 42 y el email es and151@gmail.com - toyota hilux 2020
+
+Pendientes:
+
+1) Cambiar Lavaderos por Lubricentros - Listo
+2) Armar servicio para enviar notificaciones por la posición. - Listo 80% 21:36 10/03/2019
+3) Cambiar el logo de P&P y hacer screenshots - Listo.
+4) Armar la presentación para los vendedores.
+5) Subir la app al Store.
+
+19:54 09/03/2019
+
+6) Completar los filtros con 30 de cada uno para muestra.
+7) Arreglar caracteres especiales en el webView. Casi listo - a mejorar.
+8) blindar las cadenas que ingresan como datos de usuario para evitar clgar la db. - Listo 75% 21:36 10/03/2019
+
+20:15 10/03/2019
+
+9) %2C es apra cambiar la coma en los GET.
+10) %27 es para cambiar la comilla simple '.
+12) Aplicar filtro de opciones personales. Listo 100% - 21:46 10/03/2019
+
+
+
+

@@ -1368,6 +1368,7 @@ public class MainActivity extends AppCompatActivity
                             //so we get an updated list
                             //we will create this method right now it is commented
                             //because we haven't created it yet
+                            //para generar el release-1.0
 
                             refreshSitesList(objectSitios.getJSONArray("sitios"));
                         }

@@ -56,7 +56,7 @@ public class ScrollingActivitySitio extends AppCompatActivity {
     private boolean isStarOn = false;
     private FloatingActionButton fab;
     private List<String> favoritosList;
-    private Set myFavorits;
+    private Set<String> myFavorits;
 
     private String[] infoSiteParts;
 
@@ -90,14 +90,14 @@ public class ScrollingActivitySitio extends AppCompatActivity {
         favoritosList = new ArrayList<>();
         fab = findViewById(R.id.fabScroll);
 
-        myFavorits = new HashSet(favoritosList);
+        myFavorits = new HashSet<String>(favoritosList);
 
         if (MainActivity.pref.getStringSet(KEY_USER_FAVORITOS, null)!=null){
             favoritosList = Arrays.asList(MainActivity.pref.getStringSet(KEY_USER_FAVORITOS,
                     null).toArray(new String[MainActivity.pref.getStringSet(KEY_USER_FAVORITOS,
                     null).size()]));
 
-            myFavorits =  new HashSet(favoritosList);
+            myFavorits =  new HashSet<String>(favoritosList);
 
             if (myFavorits.contains(String.valueOf(infoSiteParts[1]))){//TODO cambiar el index para que tome el del sitio dinamicamente.
                 fab.setImageResource(android.R.drawable.btn_star_big_on); //android.R.drawable.btn_star_big_on

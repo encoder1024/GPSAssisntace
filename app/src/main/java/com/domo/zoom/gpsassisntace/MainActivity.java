@@ -74,6 +74,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+//Comentario para generar el release 1.2
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -176,6 +178,12 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         if (pref.getBoolean(Constants.KEY_USER_EXISTE, false) && pref.getBoolean(Constants.KEY_USER_FINAL, true)){
             registerReceiver(broadcastReceiver, new IntentFilter(GoogleService.str_receiver));
+        }
+
+        if (pref.getBoolean(Constants.KEY_USER_EXISTE, false) && pref.getBoolean(Constants.KEY_USER_FINAL, true)){
+            appUser();
+        } else {
+            appPro();
         }
     }
 
@@ -357,18 +365,21 @@ public class MainActivity extends AppCompatActivity
                                 ActivityCompat.requestPermissions(getActivity(),
                                         new String[]{Manifest.permission.CALL_PHONE},
                                         MY_PERMISSIONS_REQUEST_CALL);
-                            } else {
+                            } else if (sitesList.size() > 0) {
                                 Intent i = new Intent(Intent.ACTION_CALL);
                                 i.setData(Uri.parse("tel:"+sitesList.get(0).getTeleSite()));
                                 startActivity(i);
                             }
                         }
                     });
-                    PerformNetworkRequestPro request = new PerformNetworkRequestPro(
-                            Api.URL_READ_SITIOS_FULL + String.valueOf(pref.getInt(Constants.KEY_USER_PRO_SITIOID, 0)),
-                            null,
-                            CODE_GET_REQUEST);
-                    request.execute();
+                    if (MainActivity.proList.size() > 0) {
+                        PerformNetworkRequestPro request = new PerformNetworkRequestPro(
+                                Api.URL_READ_SITIOS_FULL + String.valueOf(pref.getInt(Constants.KEY_USER_PRO_SITIOID, 0)),
+                                null,
+                                CODE_GET_REQUEST);
+                        request.execute();
+                    }
+
 
                     return rootView;
 
@@ -414,238 +425,250 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    boolean layoutUserExist = false;
+
     private void appUser() {
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        if (!layoutUserExist){
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        sitesList = new ArrayList<>();
-        usersList = new ArrayList<>();
-        proList = new ArrayList<>();
-        miFiltroList = new ArrayList<>();
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+            sitesList = new ArrayList<>();
+            usersList = new ArrayList<>();
+            proList = new ArrayList<>();
+            miFiltroList = new ArrayList<>();
 
-        //findViewById de todos los fab.
-        fab = findViewById(R.id.fab);
-        fab1 = findViewById(R.id.fab1);
-        fab2 = findViewById(R.id.fab2);
-        fab3 = findViewById(R.id.fab3);
-        fab4 = findViewById(R.id.fab4);
-        fab5 = findViewById(R.id.fab5);
-        fab6 = findViewById(R.id.fab6);
+            //findViewById de todos los fab.
+            fab = findViewById(R.id.fab);
+            fab1 = findViewById(R.id.fab1);
+            fab2 = findViewById(R.id.fab2);
+            fab3 = findViewById(R.id.fab3);
+            fab4 = findViewById(R.id.fab4);
+            fab5 = findViewById(R.id.fab5);
+            fab6 = findViewById(R.id.fab6);
 
-        fab.setOnClickListener(new View.OnClickListener() { //BOTON INICIAL DEL FILTRO
-            @Override
-            public void onClick(View view) { //Filtros
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
-                    //TODO fab Filtro: Acá debe volver a mostrar todos los puntos del mapa de las tres categorías principales.
-                    if (fabVista != CODE_FAB_FILTRO){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_FILTRO;
-                        actDisplayMap(CODE_FAB_FILTRO);
+            fab.setOnClickListener(new View.OnClickListener() { //BOTON INICIAL DEL FILTRO
+                @Override
+                public void onClick(View view) { //Filtros
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
+                        //TODO fab Filtro: Acá debe volver a mostrar todos los puntos del mapa de las tres categorías principales.
+                        if (fabVista != CODE_FAB_FILTRO){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_FILTRO;
+                            actDisplayMap(CODE_FAB_FILTRO);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Repuestos
+            fab1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Repuestos
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
-                    //TODO fab Repuestos: mostrar solo las casas de repuestos.
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
+                        //TODO fab Repuestos: mostrar solo las casas de repuestos.
 
-                    if (fabVista != CODE_FAB_REPUESTOS){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_REPUESTOS;
-                        actDisplayMap(CODE_DB_REPUESTOS);
+                        if (fabVista != CODE_FAB_REPUESTOS){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_REPUESTOS;
+                            actDisplayMap(CODE_DB_REPUESTOS);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Gomerias
+            fab2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Gomerias
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
-                    //TODO fab Gomerías: mostrar solo las gomerías.
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
+                        //TODO fab Gomerías: mostrar solo las gomerías.
 
-                    if (fabVista != CODE_FAB_GOMERIA){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_GOMERIA;
-                        actDisplayMap(CODE_DB_GOMERIA);
+                        if (fabVista != CODE_FAB_GOMERIA){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_GOMERIA;
+                            actDisplayMap(CODE_DB_GOMERIA);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Talleres
+            fab3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Talleres
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
 
-                    if (fabVista != CODE_FAB_TALLER){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_TALLER;
-                        actDisplayMap(CODE_DB_TALLER);
+                        if (fabVista != CODE_FAB_TALLER){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_TALLER;
+                            actDisplayMap(CODE_DB_TALLER);
+                        }
+
                     }
-
                 }
-            }
-        });
+            });
 
-        fab4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Servicios
+            fab4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Servicios
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
 
-                    if (fabVista != CODE_FAB_SERVICIOS){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_SERVICIOS;
-                        actDisplayMap(CODE_DB_SERVICIOS);
+                        if (fabVista != CODE_FAB_SERVICIOS){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_SERVICIOS;
+                            actDisplayMap(CODE_DB_SERVICIOS);
+                        }
+
                     }
-
                 }
-            }
-        });
+            });
 
-        fab5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Lavaderos //TODO: cambiar a lubricentros.
+            fab5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Lavaderos //TODO: cambiar a lubricentros.
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
 
-                    if (fabVista != CODE_FAB_LAVADERO){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_LAVADERO;
-                        actDisplayMap(CODE_DB_LAVADERO);
+                        if (fabVista != CODE_FAB_LAVADERO){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_LAVADERO;
+                            actDisplayMap(CODE_DB_LAVADERO);
+                        }
+
                     }
-
                 }
-            }
-        });
+            });
 
-        fab6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Varios
+            fab6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //Varios
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
 
-                    if (fabVista != CODE_FAB_VARIOS){
-                        mMap.clear();
-                        //TODO fab Talleres: mostrar solo los talleres.
-                        fabVista = CODE_FAB_VARIOS;
-                        actDisplayMap(CODE_DB_VARIOS);
+                        if (fabVista != CODE_FAB_VARIOS){
+                            mMap.clear();
+                            //TODO fab Talleres: mostrar solo los talleres.
+                            fabVista = CODE_FAB_VARIOS;
+                            actDisplayMap(CODE_DB_VARIOS);
+                        }
+
                     }
-
                 }
-            }
-        });
+            });
 
-        showFABMenu();
-        isFABOpen = true;
+            showFABMenu();
+            isFABOpen = true;
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+
+            layoutUserExist = true;
+        }
+
     }
-
+    private boolean layoutProExist = false;
     private void appPro() {
-        setContentView(R.layout.activity_main_pro);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         sitesList = new ArrayList<>();
         usersList = new ArrayList<>();
         proList = new ArrayList<>();
 
+        if (pref.getBoolean("key_existe", false) && !layoutProExist){
+            setContentView(R.layout.activity_main_pro);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new MainActivity.SectionsPagerAdapter(getSupportFragmentManager());
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+            mSectionsPagerAdapter = new MainActivity.SectionsPagerAdapter(getSupportFragmentManager());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.container);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+            mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+            layoutProExist = true;
+        }
 
         readUser();
 
@@ -1019,6 +1042,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         googleMap.setOnInfoWindowClickListener(this);
+
+//        if (pref.getBoolean(Constants.KEY_USER_EXISTE, false) && pref.getBoolean(Constants.KEY_USER_FINAL, true)){
+//            appUser();
+//        } else {
+//            appPro();
+//        }
 
     }
 
@@ -1675,7 +1704,7 @@ public class MainActivity extends AppCompatActivity
 //        TextView tvDisplay = findViewById(R.id.tvDescrip);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.usersList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
+            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.proList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
         } else {
             tvDisplay.setText(Html.fromHtml("<h2>Title</h2><br><p>Description here</p>"));
         }

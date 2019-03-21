@@ -74,6 +74,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+//Comentario para generar el release 1.2
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 

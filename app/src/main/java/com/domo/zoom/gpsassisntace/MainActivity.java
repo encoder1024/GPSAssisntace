@@ -619,13 +619,13 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
+    private boolean layoutProExist = false;
     private void appPro() {
         sitesList = new ArrayList<>();
         usersList = new ArrayList<>();
         proList = new ArrayList<>();
 
-        if (pref.getBoolean("key_existe", false)){
+        if (pref.getBoolean("key_existe", false) && !layoutProExist){
             setContentView(R.layout.activity_main_pro);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -665,6 +665,7 @@ public class MainActivity extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+            layoutProExist = true;
         }
 
         readUser();

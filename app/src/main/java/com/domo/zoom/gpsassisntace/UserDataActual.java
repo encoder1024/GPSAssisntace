@@ -288,13 +288,15 @@ public class UserDataActual extends AppCompatActivity {
                         etDate.setVisibility(View.GONE);
                         //etDate.setText("1886");
                         etPass.setVisibility(View.VISIBLE);
-                        btActData.setEnabled(true);
+                        //btActData.setEnabled(true);
+                        btActData.setText("Acceso Prestador");
 
                         SharedPreferences.Editor editor = MainActivity.pref.edit();
                         editor.putBoolean(Constants.KEY_USER_FINAL, false); // Storing boolean - true/false
                         editor.commit(); // commit changes
 
                     } else {
+                        etPass.setVisibility(View.GONE);
                         SharedPreferences.Editor editor = MainActivity.pref.edit();
                         editor.putBoolean(Constants.KEY_USER_FINAL, true); // Storing boolean - true/false
                         editor.commit(); // commit changes

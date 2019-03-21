@@ -357,18 +357,21 @@ public class MainActivity extends AppCompatActivity
                                 ActivityCompat.requestPermissions(getActivity(),
                                         new String[]{Manifest.permission.CALL_PHONE},
                                         MY_PERMISSIONS_REQUEST_CALL);
-                            } else {
+                            } else if (sitesList.size() > 0) {
                                 Intent i = new Intent(Intent.ACTION_CALL);
                                 i.setData(Uri.parse("tel:"+sitesList.get(0).getTeleSite()));
                                 startActivity(i);
                             }
                         }
                     });
-                    PerformNetworkRequestPro request = new PerformNetworkRequestPro(
-                            Api.URL_READ_SITIOS_FULL + String.valueOf(pref.getInt(Constants.KEY_USER_PRO_SITIOID, 0)),
-                            null,
-                            CODE_GET_REQUEST);
-                    request.execute();
+                    if (MainActivity.proList.size() > 0) {
+                        PerformNetworkRequestPro request = new PerformNetworkRequestPro(
+                                Api.URL_READ_SITIOS_FULL + String.valueOf(pref.getInt(Constants.KEY_USER_PRO_SITIOID, 0)),
+                                null,
+                                CODE_GET_REQUEST);
+                        request.execute();
+                    }
+
 
                     return rootView;
 
@@ -1019,6 +1022,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         googleMap.setOnInfoWindowClickListener(this);
+
+//        if (pref.getBoolean(Constants.KEY_USER_EXISTE, false) && pref.getBoolean(Constants.KEY_USER_FINAL, true)){
+//            appUser();
+//        } else {
+//            appPro();
+//        }
 
     }
 
@@ -1675,7 +1684,7 @@ public class MainActivity extends AppCompatActivity
 //        TextView tvDisplay = findViewById(R.id.tvDescrip);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.usersList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
+            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.proList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
         } else {
             tvDisplay.setText(Html.fromHtml("<h2>Title</h2><br><p>Description here</p>"));
         }

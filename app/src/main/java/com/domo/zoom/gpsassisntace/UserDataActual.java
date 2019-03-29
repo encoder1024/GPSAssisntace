@@ -265,11 +265,20 @@ public class UserDataActual extends AppCompatActivity {
                         etPass.requestFocus();
                         return;
                     }
-                    PerformNetworkRequest request = new PerformNetworkRequest(
-                            Api.URL_READ_USER + "'" + etEmail.getText().toString() +"'",
-                            null,
-                            CODE_GET_REQUEST);
-                    request.execute();
+                    if (MainActivity.pref.getBoolean(Constants.KEY_USER_FINAL, true)){
+                        PerformNetworkRequest request = new PerformNetworkRequest(
+                                Api.URL_READ_USER + "'" + etEmail.getText().toString() +"'",
+                                null,
+                                CODE_GET_REQUEST);
+                        request.execute();
+                    } else {
+                        PerformNetworkRequest request = new PerformNetworkRequest(
+                                Api.URL_READ_PRO + "'" + etEmail.getText().toString() +"'",
+                                null,
+                                CODE_GET_REQUEST);
+                        request.execute();
+                    }
+
 
                 }
             });
@@ -540,13 +549,14 @@ public class UserDataActual extends AppCompatActivity {
                         }
                         break;
                     case Api.URL_READ_USER:
+                    case Api.URL_READ_PRO:
                         JSONObject objectUserRead = new JSONObject(s);
                         if (!objectUserRead.getBoolean("error" ) && objectUserRead.getJSONArray("users").length() > 0) {
 
                             if (MainActivity.pref.getBoolean(Constants.KEY_USER_FINAL, true)){
                                 Toast.makeText(getApplicationContext(), objectUserRead.getString("message") + ": email existente.", Toast.LENGTH_SHORT).show();
                             } else {
-                                writeCreatePro(0, 0, 0, 0, "1886",
+                                writeDataPro(0, 0, 0, 0, "1886",
                                         etName.getText().toString(), etLastName.getText().toString(),
                                         etEmail.getText().toString(), etCelular.getText().toString(),
                                         MainActivity.pref.getString(Constants.KEY_USER_FIREBASE_TOKEN, null),

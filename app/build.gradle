@@ -6,8 +6,8 @@ android {
         applicationId "com.domo.zoom.gpsassisntace"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 5
-        versionName "1.4"
+        versionCode 6
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,6 +23,11 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+    sourceSets {
+        debug {
+            manifest.srcFile 'src/debug/AndroidManifest.xml'
+        }
+    }
 }
 
 dependencies {
@@ -37,7 +42,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
     implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+    implementation 'com.google.firebase:firebase-messaging:17.5.0'
 
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'

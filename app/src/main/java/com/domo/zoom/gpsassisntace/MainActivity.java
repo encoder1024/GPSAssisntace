@@ -1703,11 +1703,11 @@ public class MainActivity extends AppCompatActivity
 
 //        TextView tvDisplay = findViewById(R.id.tvDescrip);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.proList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            tvDisplay.setText(Html.fromHtml("<h2>Title</h2><br><p>Description here</p>"));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            tvDisplay.setText(Html.fromHtml("<h1>Title</h1><br><h2>Description here</h2><br><p>Bienvenido: " + MainActivity.proList.get(0).getApellidoUser() + "</p>", Html.FROM_HTML_MODE_COMPACT));
+//        } else {
+//            tvDisplay.setText(Html.fromHtml("<h2>Title</h2><br><p>Description here</p>"));
+//        }
 
        // WebView wvDisplay = findViewById(R.id.wvDisplay);
 

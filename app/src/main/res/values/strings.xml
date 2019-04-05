@@ -114,4 +114,5 @@
     <string name="tab_text_3">Info</string>
     <string name="section_format">Tu información estará disponible pronto en esta sección: %1$d</string>
     <string name="action_settings_pro">Opciones</string>
+    <string name="title_activity_filtro_buscar">FiltroBuscar</string>
 </resources>

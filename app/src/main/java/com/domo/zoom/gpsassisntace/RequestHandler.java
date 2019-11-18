@@ -85,6 +85,7 @@ public class RequestHandler {
                 sb.append(s + "\n");
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return sb.toString();
     }

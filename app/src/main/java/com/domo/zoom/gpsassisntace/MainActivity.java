@@ -155,8 +155,16 @@ public class MainActivity extends AppCompatActivity
 
     private static Context context;
     private boolean miFiltroAplicado = false;
+    private boolean buscarFiltroAplicado = false;
 
     private Menu menu;
+
+    private NotificationManager notificationManager;
+
+    boolean layoutUserExist = false;
+    private boolean layoutProExist = false;
+
+    private static final int CODE_REQUEST_BUSCAR_FILTRO = 124;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,7 +290,7 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    private NotificationManager notificationManager;
+
 
     private Notification getNotificationCerca(String title, String msg, Context context) {
 
@@ -425,7 +433,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    boolean layoutUserExist = false;
 
     private void appUser() {
 
@@ -621,7 +628,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-    private boolean layoutProExist = false;
+
     private void appPro() {
         sitesList = new ArrayList<>();
         usersList = new ArrayList<>();
@@ -903,6 +910,14 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == R.id.buscar) {
             //Buscar especialidades y marcas para agregar al filtro.
+
+            Intent intent=new Intent(MainActivity.this,FiltroBuscar.class);
+            startActivityForResult(intent, CODE_REQUEST_BUSCAR_FILTRO);
+
+
+
+
+
             return true;
         }
         if (id == R.id.action_settings_pro){ // Opciones para Pro
@@ -912,6 +927,49 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Call Back method  to get the Message form other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==CODE_REQUEST_BUSCAR_FILTRO)
+        {
+            String message=data.getStringExtra("MESSAGE"); //TODO leer los valores de Tipo, Marca, Especialidad elegidos en la Activity FiltroBuscar.class
+
+            //Actualizo los sitios que se muestran en el mapa. Lo voy a dejar en el callback de la Activity for Result...
+            MenuItem miFiltroMenuItem = menu.findItem(R.id.action_settings);
+            MenuItem bedMenuItem = menu.findItem(R.id.buscar);
+            if (!buscarFiltroAplicado){
+                bedMenuItem.setTitle("Buscar: Aplicado");
+                if(miFiltroAplicado){
+                    miFiltroMenuItem.setTitle("Mi filtro");
+                    miFiltroAplicado = false;
+                }
+                buscarFiltroAplicado = true;
+                PerformNetworkRequest request = new PerformNetworkRequest(
+                        Api.URL_READ_SITIOS_POR_MARCATIPO + //TODO Agregar la opcion de especialidad. Hay que trabajar en el backend PHP sobre la Api y la consulta.
+                                String.valueOf(pref.getInt(Constants.KEY_USER_VEHICULO_MARCA_ID , 0)) +
+                                "&idTipo=" + String.valueOf(pref.getInt(Constants.KEY_USER_VEHICULO_TIPO_ID , 0)),
+                        null,
+                        CODE_GET_REQUEST);
+                request.execute();
+            } else {
+                bedMenuItem.setTitle("Buscar:");
+                buscarFiltroAplicado = false;
+                //TODO mostrar todos los sitios de nuevo...
+                closeFABMenu();
+                mMap.clear();
+                //fab Talleres: mostrar solo los talleres.
+                fabVista = CODE_FAB_FILTRO;
+                actDisplayMap(CODE_FAB_FILTRO);
+
+            }
+
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

@@ -613,8 +613,18 @@ public class UserDataActual extends AppCompatActivity {
         editor.putString("key_celular", MainActivity.usersList.get(0).getCelularUser()); // Storing integer
         editor.putInt("key_id_vehiculo", MainActivity.usersList.get(0).getVehiId()); // Storing float
         editor.putInt(Constants.KEY_USER_VEHICULO_TIPO_ID, posTipoVe); //recordad sumar uno si la posición es la 4 (aviones) por diferencias con la DB
-        editor.putInt(Constants.KEY_USER_VEHICULO_MARCA_ID, marcasList.get(posMarcaVe-1).getIdMarca());
-        editor.putInt("key_modelo_vehi", modelosList.get(posModeloVe-1).getIdModelo());
+        if ( posMarcaVe > 0) {
+            editor.putInt(Constants.KEY_USER_VEHICULO_MARCA_ID, marcasList.get(posMarcaVe-1).getIdMarca());
+        } else {
+            editor.putInt(Constants.KEY_USER_VEHICULO_MARCA_ID, marcasList.get(posMarcaVe).getIdMarca());   
+        }
+        
+        if ( posModeloVe > 0) {
+            editor.putInt("key_modelo_vehi", modelosList.get(posModeloVe-1).getIdModelo());
+        } else {
+            editor.putInt("key_modelo_vehi", modelosList.get(posModeloVe).getIdModelo());   
+        }
+
         editor.putString("key_edad_vehi", etDate.getText().toString());
 
 

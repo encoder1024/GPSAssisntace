@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".FiltroBuscar"
+    tools:showIn="@layout/activity_filtro_buscar">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="395dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="100dp"
+        android:hint="Describa lo que necesita aquí..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_manage" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_send" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_share" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_camera" />
+
+    <ListView
+        android:id="@+id/lvMarcas"
+        android:layout_width="397dp"
+        android:layout_height="255dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
+        app:layout_constraintVertical_bias="0.07" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="329dp"
+        android:layout_height="82dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="La descripción puede ser una especialidad de un taller, un repuesto, un servicio de abogado, escribano, asesor y cualquier palabra clave que inidca lo que usted necesita encontrar."
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lvMarcas" />
+</android.support.constraint.ConstraintLayout>

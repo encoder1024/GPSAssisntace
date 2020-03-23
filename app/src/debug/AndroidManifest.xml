@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.domo.zoom.gpsassisntace">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
-    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" / -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Map permission Starts -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Map permission Starts -->
     <permission
         android:name="com.example.mapdemoapiv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -20,14 +24,11 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -35,15 +36,10 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".FiltroBuscar"
-            android:label="@string/title_activity_filtro_buscar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
         <service
             android:name=".GoogleService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"></service>
 
         <activity
             android:name=".ScrollingActivitySitio"
@@ -92,8 +88,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static android.view.View.GONE;
 
@@ -314,8 +315,39 @@ public class UserDataActual extends AppCompatActivity {
                 }
             });
             builder.show();
+        } else if(action.equals("inicialUser")){
+            SharedPreferences.Editor editor = MainActivity.pref.edit();
+            editor.putBoolean(MainActivity.KEY_USER_EXISTE, true); // Storing boolean - true/false
+            editor.putInt(MainActivity.KEY_USER_ID, 123456789); // Storing string
+            editor.putString(MainActivity.KEY_USER_NOMBRE, "UsuarioGeneral"); // Storing integer
+            editor.putString("key_apellido", "Apellido"); // Storing float
+            editor.putString("key_email", getRandomString(7) + "@emailgeneral.com"); // Storing long
+            editor.putString("key_created_at", "13/03/2020"); // Storing string
+            editor.putString("key_celular", "3513854949"); // Storing integer
+            editor.putInt("key_id_vehiculo", 1); // Storing float
+            editor.putInt(Constants.KEY_USER_VEHICULO_TIPO_ID, posTipoVe); //recordad sumar uno si la posición es la 4 (aviones) por diferencias con la DB
+            editor.putInt(Constants.KEY_USER_VEHICULO_MARCA_ID, 3);
+            editor.putInt("key_modelo_vehi", 1);
+            editor.putString("key_edad_vehi", "2020");
+            editor.commit(); // commit changes
+
+            //TODO 2020
+
+            writeCreateUser(0, 1, 3, 1, "2020", "UsuarioGeneral",
+                    "Apellido", MainActivity.pref.getString("key_email", "por_defecto@email.com"),"3513854949","token");
         }
 
+    }
+
+    private static final String ALLOWED_CHARACTERS ="qwertyuiopasdfghjklzxcvbnm";
+
+    private static String getRandomString(final int sizeOfRandomString)
+    {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
     }
 
     public class Norm {

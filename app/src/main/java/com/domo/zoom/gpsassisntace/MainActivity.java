@@ -1214,8 +1214,11 @@ public class MainActivity extends AppCompatActivity
             }
 
         } else {
+//            Intent myIntent = new Intent(MainActivity.this, UserDataActual.class);
+//            myIntent.putExtra("key", "registrarUser"); //Optional parameters
+//            MainActivity.this.startActivity(myIntent);
             Intent myIntent = new Intent(MainActivity.this, UserDataActual.class);
-            myIntent.putExtra("key", "registrarUser"); //Optional parameters
+            myIntent.putExtra("key", "inicialUser"); //Optional parameters
             MainActivity.this.startActivity(myIntent);
         }
 //        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_USER + "'test@test.com'", null, CODE_GET_REQUEST);
